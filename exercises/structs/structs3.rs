@@ -7,8 +7,6 @@
 // Execute `rustlings hint structs3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 #[derive(Debug)]
 struct Package {
     sender_country: String,
@@ -29,12 +27,12 @@ impl Package {
         }
     }
 
-    fn is_international(&self) -> ??? {
-        // Something goes here...
+    fn is_international(&self) -> bool {
+        self.sender_country.ne(&self.recipient_country)
     }
 
-    fn get_fees(&self, cents_per_gram: i32) -> ??? {
-        // Something goes here...
+    fn get_fees(&self, cents_per_gram: i32) -> i32 {
+        self.weight_in_grams * cents_per_gram
     }
 }
 
@@ -42,6 +40,8 @@ impl Package {
 mod tests {
     use super::*;
 
+    // #[should_panic] 是测试属性宏，用于标记预期会 panic(崩溃)的测试用例。
+    // 如果被标记的测试函数确实发生了 panic，测试框架会认为该测试通过；如果没有 panic，则测试失败。
     #[test]
     #[should_panic]
     fn fail_creating_weightless_package() {
