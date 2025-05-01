@@ -6,7 +6,7 @@
 // Execute `rustlings hint iterators2` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+use std::borrow::Cow;
 
 // Step 1.
 // Complete the `capitalize_first` function.
@@ -15,7 +15,7 @@ pub fn capitalize_first(input: &str) -> String {
     let mut c = input.chars();
     match c.next() {
         None => String::new(),
-        Some(first) => ???,
+        Some(first) => first.to_uppercase().collect::<String>() + c.as_str(),
     }
 }
 
@@ -24,7 +24,7 @@ pub fn capitalize_first(input: &str) -> String {
 // Return a vector of strings.
 // ["hello", "world"] -> ["Hello", "World"]
 pub fn capitalize_words_vector(words: &[&str]) -> Vec<String> {
-    vec![]
+    words.iter().map(|word| capitalize_first(word)).collect()
 }
 
 // Step 3.
@@ -32,7 +32,9 @@ pub fn capitalize_words_vector(words: &[&str]) -> Vec<String> {
 // Return a single string.
 // ["hello", " ", "world"] -> "Hello World"
 pub fn capitalize_words_string(words: &[&str]) -> String {
-    String::new()
+    // words.iter().map(|word| if word.trim().is_empty() { " ".to_string() } else { capitalize_first(word) }).collect()
+    // 使用 Cow 处理有很多空格的情况时性能更高
+    words.iter().map(|word| if word.trim().is_empty() { Cow::Borrowed(" ") } else { Cow::Owned(capitalize_first(word)) }).collect()
 }
 
 #[cfg(test)]
