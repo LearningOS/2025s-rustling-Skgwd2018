@@ -47,7 +47,7 @@ impl From<&str> for Person {
                 }
             }
             _ => (),
-        }
+        };
 
         Person::default()
     }
